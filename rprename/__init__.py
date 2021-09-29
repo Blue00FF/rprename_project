@@ -3,4 +3,4 @@
 
 """This module provides the rprename package."""
 
-__version__ = "0.1.0"
+__version__ = "0.2.0"
