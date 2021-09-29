@@ -42,27 +42,27 @@ class Window(QWidget):
 
     def _update_state_no_files(self):
         self._files_count = len(self._files)
-        self.loadFilesButton.setEnabled(True)
-        self.loadFilesButton.setFocus(True)
-        self.renameFilesButton.setEnabled(False)
-        self.prefixEdit.clear()
-        self.prefixEdit.setEnabled(False)
+        self.ui.loadFilesButton.setEnabled(True)
+        self.ui.loadFilesButton.setFocus(True)
+        self.ui.renameFilesButton.setEnabled(False)
+        self.ui.prefixEdit.clear()
+        self.ui.prefixEdit.setEnabled(False)
 
     def _connect_signals_slots(self):
-        self.loadFilesButton.clicked.connect(self.load_files)
-        self.renameFilesButton.clicked.connect(self.rename_files)
-        self.prefixEdit.textChanged.connect(self._update_state_ready)
+        self.ui.loadFilesButton.clicked.connect(self.load_files)
+        self.ui.renameFilesButton.clicked.connect(self.rename_files)
+        self.ui.prefixEdit.textChanged.connect(self._update_state_ready)
 
     def _update_state_ready(self):
-        if self.prefixEdit.text():
-            self.renameFilesButton.setEnabled(True)
+        if self.ui.prefixEdit.text():
+            self.ui.renameFilesButton.setEnabled(True)
         else:
-            self.renameFilesButton.setEnabled(False)
+            self.ui.renameFilesButton.setEnabled(False)
 
     def load_files(self):
-        self.dstFileList.clear()
-        if self.dirEdit.text():
-            init_dir = self.dirEdit.text()
+        self.ui.dstFileList.clear()
+        if self.ui.dirEdit.text():
+            init_dir = self.ui.dirEdit.text()
         else:
             init_dir = str(Path.home())
         files, filter = QFileDialog.getOpenFileNames(
@@ -70,29 +70,31 @@ class Window(QWidget):
         )
         if len(files) > 0:
             file_extension = filter[filter.index("*"): -1]
-            self.extensionLabel.setText(file_extension)
+            self.ui.extensionLabel.setText(file_extension)
             src_dir_name = str(Path(files[0]).parent)
-            self.dirEdit.setText(src_dir_name)
+            self.ui.dirEdit.setText(src_dir_name)
             for file in files:
                 self._files.append(Path(file))
-                self.srcFileList.addItem(file)
+                self.ui.srcFileList.addItem(file)
             self._files_count = len(self._files)
             self._update_state_files_loaded()
 
     def _update_state_files_loaded(self):
-        self.prefixEdit.setEnabled(True)
-        self.prefixEdit.setEnabled(True)
+        self.ui.prefixEdit.setEnabled(True)
+        self.ui.prefixEdit.setFocus(True)
 
     def rename_files(self):
         self._run_renamer_thread()
         self._update_state_renaming()
 
     def _run_renamer_thread(self):
-        prefix = self.prefixEdit.text()
+        mode = self.ui.renameMode.currentText()
+        prefix = self.ui.prefixEdit.text()
         self._thread = QThread()
         self._renamer = Renamer(
             files=tuple(self._files),
             prefix=prefix,
+            mode=mode
         )
         self._renamer.moveToThread(self._thread)
         self._thread.started.connect(self._renamer.rename_files)
@@ -105,14 +107,14 @@ class Window(QWidget):
         self._thread.start()
 
     def _update_state_renaming(self):
-        self.loadFilesButton.setEnabled(False)
-        self.renameFilesButton.setEnabled(False)
+        self.ui.loadFilesButton.setEnabled(False)
+        self.ui.renameFilesButton.setEnabled(False)
 
     def _update_state_after_rename(self, new_file):
         self._files.popleft()
-        self.srcFileList.takeItem(0)
-        self.dstFileList.addItem(str(new_file))
+        self.ui.srcFileList.takeItem(0)
+        self.ui.dstFileList.addItem(str(new_file))
 
     def _update_progress_bar(self, file_number):
         progress_percent = int(file_number/self._files_count * 100)
-        self.progressBar.setValue(progress_percent)
+        self.ui.progressBar.setValue(progress_percent)

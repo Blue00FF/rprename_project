@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>1140</width>
-    <height>590</height>
+    <height>586</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>RP Renamer</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="0">
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
@@ -72,7 +72,7 @@
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
      </property>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout">
        <item>
         <widget class="QLabel" name="label_2">
@@ -92,7 +92,7 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="">
+     <widget class="QWidget" name="layoutWidget">
       <layout class="QVBoxLayout" name="verticalLayout_2">
        <item>
         <widget class="QLabel" name="label_3">
@@ -115,49 +115,70 @@
     </widget>
    </item>
    <item row="2" column="0">
-    <layout class="QHBoxLayout" name="horizontalLayout_4">
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
-       <item>
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Filename Prefix: </string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="prefixEdit">
-         <property name="minimumSize">
-          <size>
-           <width>0</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>30</height>
-          </size>
-         </property>
-         <property name="placeholderText">
-          <string>Rename your files to...</string>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="extensionLabel">
-         <property name="text">
-          <string>.jpg</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </item>
-     <item>
+    <layout class="QGridLayout" name="gridLayout">
+     <item row="0" column="3">
       <widget class="QPushButton" name="renameFilesButton">
        <property name="text">
         <string>&amp;Rename</string>
        </property>
+      </widget>
+     </item>
+     <item row="0" column="2">
+      <widget class="QLabel" name="extensionLabel">
+       <property name="text">
+        <string>.jpg</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>Filename Prefix: </string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="prefixEdit">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>30</height>
+        </size>
+       </property>
+       <property name="placeholderText">
+        <string>Rename your files to...</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="4">
+      <widget class="QComboBox" name="renameMode">
+       <property name="minimumSize">
+        <size>
+         <width>150</width>
+         <height>0</height>
+        </size>
+       </property>
+       <item>
+        <property name="text">
+         <string>Normal Mode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Datetime Mode</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Random Mode</string>
+        </property>
+       </item>
       </widget>
      </item>
     </layout>
